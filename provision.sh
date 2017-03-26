@@ -10,4 +10,4 @@ bash nodesource_setup.sh
 
 apt-get -y install nodejs
 
-npm install -g express-generator
+npm install -g serve-favicon morgan cookie-parser body-parser debug jade express express-generator
