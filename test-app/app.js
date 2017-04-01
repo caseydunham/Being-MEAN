@@ -7,6 +7,17 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var intro = require('./routes/intro');
+var whatIsMean = require('./routes/what-is-mean');
+var methodology = require('./routes/methodology');
+var setup = require('./routes/setup');
+var xss = require('./routes/xss');
+var mongodb = require('./routes/mongodb');
+var ssjsi = require('./routes/ssjsi');
+var ssti = require('./routes/ssti');
+var session = require('./routes/session');
+var jwt = require('./routes/jwt');
+var conclusion = require('./routes/conclusion');
 
 var app = express();
 
@@ -24,6 +35,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/intro', intro);
+app.use('/what-is-mean', whatIsMean);
+app.use('/methodology', methodology);
+app.use('/setup', setup);
+app.use('/xss', xss);
+app.use('/mongodb', mongodb);
+app.use('/ssjsi', ssjsi);
+app.use('/ssti', ssti);
+app.use('/session', session);
+app.use('/jwt', jwt);
+app.use('/conclusion', conclusion);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
