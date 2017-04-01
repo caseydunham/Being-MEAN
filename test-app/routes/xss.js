@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('xss');
+  var query = req.query.query;
+  console.log("value of query: " + query);
+  res.render('xss', {query: query});
 });
 
 module.exports = router;

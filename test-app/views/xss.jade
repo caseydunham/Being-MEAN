@@ -1,5 +1,25 @@
 extends layout
 
 block content
-  h1 XSS
+  h1 AngularJS Cross Site Scripting
   p Something something...
+  p.
+    The following form is vulnerable to an AngularJS Sandbox Escape.
+    Exploit the form to trigger a Reflected XSS.
+  div
+    form(name="search", method="get")
+          div.input
+              input(type="text", name="query", placeholder="Search...")
+          div.actions
+              input(type="submit", value="Go")
+
+  div(ng-app="app")
+    if query
+      p You searched for #{query}
+
+  script(src='https://code.angularjs.org/1.5.8/angular.min.js')
+  script.
+      (function() {
+        'use strict';
+        angular.module('app', []);
+      })();
