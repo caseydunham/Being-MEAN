@@ -3,3 +3,12 @@ extends layout
 block content
   h1 Server Side JavaScript Injection
   p Something something...
+  p.
+    The following form is vulnerable to a Server Side JavaScript Injection.
+    Exploit it to read /etc/passwd.
+  div
+    form(name="search", method="post")
+          div.input
+              input(type="text", name="query", placeholder="Search...")
+          div.actions
+              input(type="submit", value="Go")
