@@ -13,10 +13,12 @@ block content
           div.actions
               input(type="submit", value="Go")
 
+  //- ng-app required for the AngularJS Sandbox Escape working
   div(ng-app="app")
     if query
       p You searched for #{query}
 
+  //- any time this AngularJS is imported, this vulnerability is possible
   script(src='https://code.angularjs.org/1.5.8/angular.min.js')
   script.
       (function() {
