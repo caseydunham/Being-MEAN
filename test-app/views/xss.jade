@@ -2,11 +2,25 @@ extends layout
 
 block content
   h1 AngularJS Cross Site Scripting
-  p Something something...
+  //- TODO: Add context for this vulnerability. Include the following link:
+  //- http://blog.portswigger.net/2016/01/xss-without-html-client-side-template.html
   p.
-    The following form is vulnerable to an AngularJS Sandbox Escape.
-    Exploit the form to trigger a Reflected XSS.
+    AngularJS is an extremely popular JavaScript Framework which has
+    historically exposed websites to a form of attack known as Angular
+    Template Injection. The following form is vulnerable to an AngularJS
+    Sandbox Escape; exploit the form to trigger a Reflected XSS.
+    Please note that
+    #[a(href="http://blog.portswigger.net/2016/01/xss-without-html-client-side-template.html") Portswigger]
+    has done an excellent write-up on how to abuse AngularJS sandbox escapes
+    for total pwnage of a site via Cross Site Scripting; this write-up will
+    help you understand how the below exploit code functions.
   div
+    p.
+      For the below vulnerability, try leveraging the following sandbox
+      escape:
+    p.
+      <b>{{x = {'y':''.constructor.prototype}; x['y'].charAt=[].join;$eval
+      ('x=alert(1)');}}</b>
     form(name="search", method="get")
           div.input
               input(type="text", name="query", placeholder="Search...")
