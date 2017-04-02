@@ -18,6 +18,7 @@ var ssti = require('./routes/ssti');
 var session = require('./routes/session');
 var jwt = require('./routes/jwt');
 var conclusion = require('./routes/conclusion');
+var resources = require('./routes/resources');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use('/ssti', ssti);
 app.use('/session', session);
 app.use('/jwt', jwt);
 app.use('/conclusion', conclusion);
+app.use('/resources', resources);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
