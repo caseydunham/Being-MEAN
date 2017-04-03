@@ -2,7 +2,16 @@ extends layout
 
 block content
   h1 Server Side JavaScript Injection
-  p Something something...
+  //- TODO: Add Conext
+      //- https://ckarande.gitbooks.io/owasp-nodegoat-tutorial/content/tutorial/a1_-_server_side_js_injection.html
+      //- https://nvisium.com/blog/2015/08/27/the-evil-side-of-javascript-server-side/
+  p.
+    For many years client-side JavaScript exploitation has been the focus of
+    web application security research - with the advent of JavaScript run on
+    the server in recent years, new exploitation research has taken off. As
+    the web moved toward ever-increasing use of JavaScript to make sites
+    reactive and easier to develop, Server Side JavaScript Injection evolved
+    as one method for code execution against the host server.
   p.
     The following form is vulnerable to a Server Side JavaScript Injection.
     Exploit it to read /etc/passwd.
