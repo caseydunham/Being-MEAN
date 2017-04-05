@@ -3,6 +3,11 @@ extends layout
 block content
   h1 Server Side Template Injection Example 1
   p.
+    Modern web applications make frequent use of templates such as Jade (now
+    called "Pug") and Jinja2 to embed dynamic content in pages. When this
+    dynamic content is provided by an untrustworthy source (i.e. users), it
+    can lead to a form of exploitation known as Template Injection.
+  p.
     The following form is vulnerable to a Server Side Template Injection.
   div
     form(name="preview", method="post")
