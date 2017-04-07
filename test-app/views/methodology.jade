@@ -2,7 +2,147 @@ extends layout
 
 block content
   h1 Methodology
-  p Something something...
+  p.
+    It can seem incredibly daunting when starting to perform an assessment on an
+    application for the first time. This is true even after you've performed many
+    assessments. Every application is different, and as a consultant, it is
+    more difficult given that you never know what the client environment is going
+    to be like or what additional constraints you might have.
+  p.
+    Whenever I get overwhelmed or faced with a huge application, I just take a
+    step back and review the methodology. Everyone will have their own particular
+    way of attacking an application, it's part of the creativity that makes this
+    type of work so enjoyable. It can also be where people falter and get bogged
+    down and can't see the forest for the trees.
+  p.
+    A methodology is not necessarily a check list, but an approach. It should
+    leave some of the creativity in the hands of the tester while also ensuring
+    that the application gets the attention it deserves.
+  p.
+    The Open Web Application Security Project (OWASP) has done a great job
+    on the #[a(href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents") OWASP Testing Guide]. It breaks down many parts of the different
+    phases of a robust testing methodology. I'm not going to reiterate that here.
+    Instead I'm going to provide my thoughts on the high level phases based
+    on my approach and my experience in testing web applications over the last
+    few years. I'm also not going to number them, as other than the Information Gathering or Recon phase,
+    I may perform the sections in any particular order based on client needs or just based
+    on my own feelings towards the application.
+  p.
+    These are my own thoughts and feel free to adjust and modify where need be. Nothing
+    has to be followed specifically, use your creativity and don't fear exploration and trying
+    out new things.
+
+  h3 Reporting
+  p.
+    Yes, reporting. The bane of most consultants existence. I put this first
+    as before I start anything at all, I start to prep my report. I grab whatever
+    template I'm using and start filling out any boiler plate information. This
+    also gives me a chance to review any client communications for information that
+    I may have forgotten and to ensure I have the necessary contacts. Often times
+    I'm getting information about an upcoming assessment while I'm in the middle of another
+    one, so this is a good opportunity to get all that together. I usually start creating
+    placeholder's for this information when I know I'll be starting so I have a convenient
+    place to store the information.
+  h3 Information Gathering
+  p.
+    When first beginning an assessment, before I even begin testing, I simply
+    take a walk through the application while intercepting all of the requests.
+    I'm not performing any security testing, just getting a feel for what the
+    application is and what it does. I also test out any credentials that I was
+    provided or provision ones if I need to do so manually. A good reminder
+    is that when requesting credentials from a client, ensure you have a couple of regular
+    accounts, but also at least one administrative account. Make sure to understand
+    how these accounts are locked out and reset and the process for getting that done.
+    I'm approaching it from the standpoint of a user and do my best to try out all areas of the application.
+    While I'm doing my recon, I also peruse the Burp Target and History
+    tabs to see what the requests and responses look like, making note
+    of any that are particularly interesting.
+    I also spend time perusing the application's HTML and try to enumerate
+    what frameworks and languages they are using.
+
+    I then go through any issues that BurpSuite
+    may point out and add the ones that I verify and deem appropriate to add
+    to the report. This is a great way to get started since a great majority
+    of the time, there is always something here to report, even if it is minor,
+    as it can get the testing juices flowing.
+
+  h3 Configuration and Deployment Management Testing
+  p.
+    Usually at this point I know what frameworks, application servers, and supporting
+    services that the application is using. If possible I've identified what versions as well
+    and I review for any known vulnerabilities. If any exist, I'll verify them and add them to the report.
+  h3 Authentication and Identity Management Testing
+  p.
+    I generally roll these together since to me it's all part of the authentication
+    process. I'm looking here for information leaks related to account provisioning or other
+    peculiarities related to their Authentication workflow. This is an area that
+    involves a lot of manual review since tools can't really pick up on this.
+    Going through the Forgot Password feature (if there is one) is also fundamental
+    as there are usually things that can be improved here. Don't forget to go through various
+    workflows out of order.
+  h3 Session Management Testing
+  p.
+    Once I have a good understanding of how user's authenticate to the application and I've gone
+    over the workflow, I'll start to look at how Sessions are being managed. Are they using
+    Cookies or some other mechanism (hopefully not). If Cookies, I check to ensure that any related
+    to the actual session identifier have the appropriate protections in place.
+    I inspect whatever the session token is to ensure that it looks appropriately random and doesn't leak
+    information.
+  h3 Authorization Testing
+  p.
+    This can be a huge effort to test depending on the application and I've performed
+    assessments where the majority of testing time was evaluating the application's ability
+    to correctly handle authorization. There are tools in Burp Suite like AuthMatrix and Autorize,
+    that can greatly help here especially when just testing for authorization around particular
+    endpoints. It's also important to understand what the different roles are and what they should and
+    should not be allowed to do. This can get complex and I'll usually make notes to understand
+    what requests I want to look at that lower privileged users shouldn't be able to perform and
+    testing those with a lower privileged account.
+  h3 Input Validation Testing
+  p.
+    This is an area that I will really start to use automated tooling. I never run
+    off the shelf scripts against a client website. Production or not. I will generally
+    grab the requests I'm interested in and create specific Burp Suite Intruder
+    configurations and fuzz using a small list of payloads and then review them,
+    moving onto larger lists if needed.
+    This is true whether I'm testing for Cross Site Scripting, SQL Injection, or something
+    else. I keep a particular eye out for any XML that might be used as this is usually a great
+    source for XML External Entity Injection.
+  h3 Testing for Error Handling
+  p.
+    There's really nothing I do specifically here as I don't treat this as a
+    separate phase. By the time I get through other areas of testing, I've
+    generally triggered error handling enough to know whether or not there
+    are any ommissions in their error handling process. I will, however, perform
+    specific tests related to the server side frameworks in use to see if I
+    can trigger additional error conditions that might be handled by the underlying
+    platform, such as IIS or the .NET platform.
+  h3 Testing for Weak Cryptography
+  p.
+    At this stage, I probably have a lot of findings already (we hope?), and
+    now I'm testing for proper TLS deployment. I also at this point understand
+    if the application has any other cryptographic functionality and will look
+    at that in depth.
+  h3 Client Side Testing
+  p.
+    While vulnerabilities such as DOM XSS will typically fall out during Input Validation,
+    at this point in the testing I'm going to look at anything stored in the browser such as
+    Local Storage or Session Storage. While BurpSuite and other scanner's will pick up on
+    misconfigured HTTP headers related to X-Frame-Options, CORS, or Content-Security-Policy headers,
+    I take a more in depth look at them if need be, and put together any proof of concepts I might
+    need. This is also where I checkout any websocket functionality if there is any.
+  h3 Business Logic Testing
+  p.
+    This is an area where tooling just can't help and the experience and knowledge
+    of the pentester can really provide value to the client. This is an area where
+    it is really dependent on the application as well and how it behaves. I'll generally
+    go through as many happy path workflows as possible and than start trying to do things that
+    deviate from them. From my my QA experience, I'm also looking at ways to put things into
+    unexpected states, such as playing with triggering client side errors and still trying to
+    proceed or changing values after validation to see if I can get something through that shouldn't.
+    Note that I'm not disabling client side validation or doing anything technical to do this. Just
+    using the application as a normal user would who might be changing a lot of values or data.
+    I also will go through any workflows or wizard like routes in different orders to see what happens.
   p
     //- TODO: Figure out how to properly reroute to index
     a(href="http://localhost:3000") Return to Index
