@@ -7,14 +7,13 @@ block content
     called "Pug") and Jinja2 to embed dynamic content in pages. When this
     dynamic content is provided by an untrustworthy source (i.e. users), it
     can lead to a form of exploitation known as Template Injection.
-  p.
-    The following form is vulnerable to a Server Side Template Injection.
-  div
-    form(name="preview", method="post")
-          div.input
-              textarea(cols="80", rows="10", name="tpl")
-          div.actions
-              input(type="submit", value="Preview")
+
+  ol#contents
+    li
+      a(href="ssti_ex1") Example 1
+    li
+      a(href="ssti_ex2") Example 2
+
   p
     //- TODO: Figure out how to properly reroute to index
     a(href="http://localhost:3000") Return to Index
