@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 Server Side Template Injection Example 1
+  p.
+    The following form is vulnerable to a Server Side Template Injection.
+
+  div
+    form(name="preview", method="post")
+          div.input
+              textarea(cols="80", rows="10", name="tpl")
+          div.actions
+              input(type="submit", value="Preview")
+  p
+    a(href="ssti") Return to Previous
+  p
+    a(href="http://localhost:3000") Return to Index
