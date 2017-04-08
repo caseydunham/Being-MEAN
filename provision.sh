@@ -10,4 +10,4 @@ bash nodesource_setup.sh
 
 apt-get -y install nodejs mongodb
 
-npm install -g serve-favicon morgan cookie-parser body-parser debug jade express express-generator nodemon
+npm install -g serve-favicon morgan cookie-parser body-parser debug jade express express-generator nodemon mongoose
