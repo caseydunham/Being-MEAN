@@ -6,13 +6,14 @@ block content
     The following form is vulnerable to a Server Side Template Injection. Try
     starting with some basic tests for exploiting Server Side Template
     Injection in Jade. A good place to start might be something like this:
-  p.
-    <b># [ a(href="javascript:alert('42');") alert ]</b> without spaces.
-
+  h2 Goals
+  ol
+    li Verify the template injection vulnerability
+    li Exploit to create a Cross Site Scripting payload
   div
-    form(name="calculate", method="post", action="")
+    form(name="calculate")
           div.input
-              input(type="text", name="expr", placeholder="Expression")
+              input(type="text", name="expr", size="100" placeholder="Expression")
           div.actions
               input(type="submit", value="Calculate")
 
@@ -20,4 +21,3 @@ block content
     a(href="ssti") Return to Previous
   p
     a(href="http://localhost:3000") Return to Index
-
