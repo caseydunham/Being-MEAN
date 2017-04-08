@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     res.render('ssti_ex2');
 });
 
-router.post('/ssti_ex2', function(req, res, next) {
+router.post('/', function(req, res, next) {
     var query = req.body.expr;
     var template = 'p Hello ' + query;
     var html = jade.compile(template);
