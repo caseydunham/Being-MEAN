@@ -10,7 +10,6 @@ require('./models/db');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var intro = require('./routes/intro');
 var whatIsMean = require('./routes/what-is-mean');
 var methodology = require('./routes/methodology');
 var setup = require('./routes/setup');
@@ -41,7 +40,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/intro', intro);
 app.use('/what-is-mean', whatIsMean);
 app.use('/methodology', methodology);
 app.use('/setup', setup);
