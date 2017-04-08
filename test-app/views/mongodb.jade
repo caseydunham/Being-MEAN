@@ -1,12 +1,16 @@
 extends layout
 
 block content
-  h1 MongoDB
+  h1 MongoDB Injection
   img(src='/static/mongodb.jpg')
+  h2 Goals
+  ol
+    li Verify that the search form is vulnerable
+    li Exploit the vulnerability to return all the users
   div
     form(name="search", method="get")
           div.input
-              input(type="text", name="query", placeholder="Username...")
+              input(type="text", name="query", placeholder="Username")
           div.actions
               input(type="submit", value="Go")
 
@@ -16,6 +20,13 @@ block content
       ul
         for user in users
           li= user.username
+
+  h2 References
+  ul
+    li
+      a(href='https://www.owasp.org/index.php/Testing_for_NoSQL_injection') https://www.owasp.org/index.php/Testing_for_NoSQL_injection
+    li
+      a(href='http://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html') http://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html
   p
     //- TODO: Figure out how to properly reroute to index
     a(href="http://localhost:3000") Return to Index

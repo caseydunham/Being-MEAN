@@ -79,3 +79,10 @@ SSTI Example 2
 1. XSS Payload
 
   #[a(href="" onmouseover="javascript:alert(42);") alert]
+
+
+MongoDB Injection
+
+1. All users can be returned via the following injection:
+
+    http://localhost:3000/mongodb?query[$ne]=''
