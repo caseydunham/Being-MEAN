@@ -3,7 +3,15 @@ extends layout
 block content
   h1 Server Side Template Injection Example 1
   p.
-    The following form is vulnerable to a Server Side Template Injection.
+    The following form is vulnerable to a Server Side Template Injection. Try
+    starting with some basic tests for exploiting Server Side Template
+    Injection in Jade. A good place to start might be something like this:
+  p.
+    <b>= 7*7</b>
+  p.
+    You can find several examples on
+    #[a(href="http://blog.portswigger.net/2015/08/server-side-template-injection.html") PortSwigger]'s
+    website.
 
   div
     form(name="preview", method="post")

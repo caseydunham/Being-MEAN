@@ -10,7 +10,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     var query = req.body.tpl;
-    //- fs.readFile('./views/ssti.jade', function(err, data) {
     fs.readFile('./views/ssti_ex1.jade', function(err, data) {
         var compiled = jade.compile(query);
         var html = compiled()
