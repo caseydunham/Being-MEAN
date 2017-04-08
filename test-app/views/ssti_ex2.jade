@@ -7,7 +7,8 @@ block content
     starting with some basic tests for exploiting Server Side Template
     Injection in Jade. A good place to start might be something like this:
   p.
-    <b># [ a(href="javascript:alert('42');") alert ]</b> without spaces.
+    <b># [ a(href="javascript:alert('42');") alert ]</b> without spaces
+    between the #, [, and ] characters.
 
   div
     form(name="calculate", method="post", action="")
