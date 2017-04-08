@@ -8,11 +8,11 @@ block content
     Injection in Jade. A good place to start might be something like this:
   p.
     <b>= 7*7</b>
-  p.
-    You can find several examples on
-    #[a(href="http://blog.portswigger.net/2015/08/server-side-template-injection.html") PortSwigger]'s
-    website.
-
+  h2 Goals
+  ol
+    li Verify that the below form is vulnerable
+    li Exploit the injection to read /etc/passwd
+    li Can you get a remote shell?
   div
     form(name="preview", method="post")
           div.input
