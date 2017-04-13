@@ -16,10 +16,16 @@ block content
 
   if users
     h2 Search returned the following users:
-    p
-      ul
-        for user in users
-          li= user.username
+    table
+      tr
+        th First Name
+        th Last Name
+        th User Name
+      for user in users
+        tr
+          td= user.firstName
+          td= user.lastName
+          td= user.username
 
   h2 References
   ul
