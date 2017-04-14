@@ -14,13 +14,10 @@ block content
     has done an excellent write-up on how to abuse AngularJS sandbox escapes
     for total pwnage of a site via Cross Site Scripting; this write-up will
     help you understand how the below exploit code functions.
+  h2 Goals
+  ol
+    li Create an XSS payload by bypassing the AngularJS Sandbox
   div
-    p.
-      For the below vulnerability, try leveraging the following sandbox
-      escape:
-    p.
-      <b>{{x = {'y':''.constructor.prototype}; x['y'].charAt=[].join;$eval
-      ('x=alert(1)');}}</b>
     form(name="search", method="get")
           div.input
               input(type="text", name="query", placeholder="Search...")

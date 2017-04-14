@@ -10,10 +10,8 @@ require('./models/db');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var intro = require('./routes/intro');
 var whatIsMean = require('./routes/what-is-mean');
 var methodology = require('./routes/methodology');
-var setup = require('./routes/setup');
 var xss = require('./routes/xss');
 var mongodb = require('./routes/mongodb');
 var ssjsi = require('./routes/ssjsi');
@@ -22,7 +20,6 @@ var ssti_ex1 = require('./routes/ssti_ex1');
 var ssti_ex2 = require('./routes/ssti_ex2');
 var session = require('./routes/session');
 var jwt = require('./routes/jwt');
-var conclusion = require('./routes/conclusion');
 var resources = require('./routes/resources');
 
 var app = express();
@@ -41,10 +38,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/intro', intro);
 app.use('/what-is-mean', whatIsMean);
 app.use('/methodology', methodology);
-app.use('/setup', setup);
 app.use('/xss', xss);
 app.use('/mongodb', mongodb);
 app.use('/ssjsi', ssjsi);
@@ -53,7 +48,6 @@ app.use('/ssti_ex1', ssti_ex1);
 app.use('/ssti_ex2', ssti_ex2);
 app.use('/session', session);
 app.use('/jwt', jwt);
-app.use('/conclusion', conclusion);
 app.use('/resources', resources);
 
 // catch 404 and forward to error handler
